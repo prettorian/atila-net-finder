@@ -1,16 +1,7 @@
-# 📦 1. Actualiza Termux e instala dependencias base
-pkg update -y && pkg upgrade -y && pkg install python git -y
-
-# 🐍 2. Instala las librerías de Python necesarias
-python3 -m pip install requests tqdm colorama --quiet
-
-# 📜 3. Genera el script con indentación correcta
-cat > ~/ATILA-NET-FINDER.py << 'EOF'
 #!/usr/bin/env python3
 import os, sys, time, signal, ipaddress, json, csv
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Auto-verificación de librerías (respaldo por si pip falla)
 for p in ["requests", "tqdm", "colorama"]:
     try:
         __import__(p)
@@ -56,8 +47,7 @@ class Scanner:
 
     def _vp(self, ip, po):
         pu = f"http://{ip}:{po}"; st = time.time()
-        try:
-            r = requests.get(VU, proxies={"http": pu, "https": pu}, timeout=self.to, allow_redirects=True)
+        try:            r = requests.get(VU, proxies={"http": pu, "https": pu}, timeout=self.to, allow_redirects=True)
             if r.status_code == 200:
                 la = time.time() - st; orig = r.json().get("origin", "N/A")
                 an = "Elite" if "X-Forwarded-For" not in r.headers and "Via" not in r.headers else "Transparente"
@@ -106,8 +96,7 @@ def menu():
         print(f"┃╰━╯┃╱┃┃╱╱┃┃┃╱╱┃┃╱┃┃╱╭┫╰━╯┣━━╮┃┃╱┃╭━━┻━━╮┃╱┃┃")
         print(f"┃╭━╮┃╱┃┃╱╭┫┣┫╰━╯┃╭━╮┣━━╯┃┃╱┃╰━━┫╰━╯┃╱┃┃")
         print(f"╰╯╱╰╯╱╰╯╱╰━━┻━━━┻╯╱╰╯╱╱╱╰╯╱╰━━━┻━━━╯╱╰╯{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}  ATILA-NET-FINDER v{V} - Menú{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}1. Escanear\n2. Salir{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}  ATILA-NET-FINDER v{V} - Menú{Style.RESET_ALL}")        print(f"{Fore.YELLOW}1. Escanear\n2. Salir{Style.RESET_ALL}")
         op = input("\n👉 Opción: ").strip()
         if op == "1":
             ci = input("🌐 CIDR (ej: 104.16.0.0/12): ").strip()
@@ -127,8 +116,3 @@ def menu():
 
 if __name__ == "__main__":
     menu()
-EOF
-
-# 🔒 4. Permisos de ejecución y confirmación
-chmod +x ~/ATILA-NET-FINDER.py
-echo "✅ Todo listo. Ejecuta con: python3 ~/ATILA-NET-FINDER.py"
