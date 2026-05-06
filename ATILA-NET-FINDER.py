@@ -1,5 +1,3 @@
----------------------------------------------------------------------------------------------------------------------------------
-
 # 📦 1. Actualiza Termux e instala dependencias base
 pkg update -y && pkg upgrade -y && pkg install python git -y
 
